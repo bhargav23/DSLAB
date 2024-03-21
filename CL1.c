@@ -48,12 +48,12 @@ void insert_at_position(struct node **tail,int d,int pos){
 		printf("\nList is empty");
 		return;
 	}
+	struct node *ptr=(*tail)->next;
 	if(pos==1){
 		insert_at_beginning(tail,d);
 		return;
 	}
 	pos--;
-	struct node *ptr=(*tail)->next;
 	while(pos>1){
 		ptr=ptr->next;
 		pos--;
@@ -63,14 +63,14 @@ void insert_at_position(struct node **tail,int d,int pos){
 			return;	
 		}
 	}
-	if(ptr==(*tail)){
-		insert_at_end(tail,d);
-		return;
-	}
 	struct node *temp=(struct node *)malloc(sizeof(struct node *));
 	temp->data=d;
 	temp->next=ptr->next;
 	ptr->next=temp;
+	if(ptr==(*tail)){
+		*tail=temp;
+		return;
+	}
 }
 void delete_at_beginning(struct node **tail){
 	if(*tail==NULL){
@@ -86,7 +86,6 @@ void delete_at_beginning(struct node **tail){
 	(*tail)->next=ptr->next;
 	free(ptr);
 }
-
 void delete_at_end(struct node **tail){
 	if(*tail==NULL){
 		printf("\nList is empty");
@@ -97,8 +96,7 @@ void delete_at_end(struct node **tail){
 		free(ptr);
 		*tail=NULL;
 		return;
-	}
-	
+	}	
 	while(ptr->next!=*tail) {
 		ptr=ptr->next;
 	}
@@ -132,8 +130,8 @@ void delete_at_position(struct node **tail,int pos){
 	ptr->next=ptr1->next;
 	if(ptr1==*tail){
 		(*tail)=ptr;
-		free(ptr1);
-		return;
+	free(ptr1);
+	return;
 	}
 }
 
@@ -143,8 +141,6 @@ int main(){
 	create_node(&tail,10);
 	display(tail);
 
-
-	
 	insert_at_beginning(&tail,20);
 	display(tail);
 	insert_at_end(&tail,30);
@@ -161,8 +157,9 @@ int main(){
 	delete_at_end(&tail);
 	display(tail);
 	
-	delete_at_position(&tail,5);
+	delete_at_position(&tail,4);
 	display(tail);
-	
-	
+
+	delete_at_position(&tail,4);
+	display(tail);
 }
