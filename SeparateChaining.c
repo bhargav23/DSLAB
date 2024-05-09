@@ -128,6 +128,21 @@ int main()
 
     print();
 
+    printf("Searching element 10\n");
+
+    if(search(10))
+        printf("Search Found\n");
+    else
+        printf("Search Not Found\n");
+
+    if(del(10))
+    {
+        printf("After Deletion of 10\n");
+        print();
+     }
+    else
+        printf("Value Not Present\n");
+
     return 0;
 }
 
