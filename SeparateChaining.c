@@ -46,7 +46,57 @@ void insert(int value)
         temp->next = newNode;
     }
 }
+/*
+ * return 1, search found
+ * return 0, Otherwise
+ */
+int search(int value)
+{
+    int key = value % size;
+    struct node *temp = chain[key];
+    while(temp)
+    {
+        if(temp->data == value)
+            return 1;
+        temp = temp->next;
+    }
+    return 0;
+}
+/*
+ * return 1, successful delete
+ * return 0, value not found
+ */
+int del(int value)
+{
+    int key = value % size;
+    struct node *temp = chain[key], *dealloc;
+    if(temp != NULL)
+    {
+        if(temp->data == value)
+        {
+            dealloc = temp;
+            temp = temp->next;
+            free(dealloc);
+            return 1;
+        }
+        else
+        {
+            while(temp->next)
+            {
+                if(temp->next->data == value)
+                {
+                    dealloc = temp->next;
+                    temp->next = temp->next->next;
+                    free(dealloc);
+                    return 1;
+                }
+                temp = temp->next;
+            }
+        }
+    }
 
+    return 0;
+}
 void print()
 {
     int i;
